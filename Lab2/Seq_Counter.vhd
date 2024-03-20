@@ -1,96 +1,84 @@
-entity Seq_Counter is
-	port (Clk : in bit; 
-		Reset : in bit;
-		Mode : in bit_vector(1 downto 0); 
-		Enable : in bit;
-		Q : out bit_vector(3 downto 0));
-end entity;
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
 
-architecture arc1 of Seq_Counter is
+entity Seq_Counter is
+  port (
+    Clk, Reset, Enable : in  std_logic;
+    Mode : in std_logic_vector(1 downto 0);
+    Q : out std_logic_vector(3 downto 0)
+  );
+end entity Seq_Counter;
+architecture behaviour of Seq_Counter is
+  signal counter_value : integer range 0 to 15 := 0;
+  signal prev_mode : std_logic_vector(1 downto 0) := "00";
 begin
-	process(Clk, Reset)
-		variable cntr : integer;
-	begin
-		if(Reset = '1') then
-			cntr := 0;
-		end if;
-		if(Clk'event and Clk='0') then
-			if(Enable = '1') then
-				case Mode is
-					when "00" =>
-						if cntr = 1 then
-							cntr := 11;
-						else
-							cntr := cntr - 2;
-						end if;
-						case cntr is
-							when 1 => Q <= "0001";
-							when 2 => Q <= "0010";
-							when 3 => Q <= "0011";
-							when 4 => Q <= "0100";
-							when 5 => Q <= "0101";
-							when 6 => Q <= "0110";
-							when 7 => Q <= "0111";
-							when 8 => Q <= "1000";
-							when 9 => Q <= "1001";
-							when 10 => Q <= "1010";
-							when 11 => Q <= "1011";
-							when 12 => Q <= "1100";
-							when 13 => Q <= "1101";
-							when others => Q <= "0001";
-						end case;
-					when "01" =>
-						case cntr is
-							when 10 => cntr := 5;
-							when 5 => cntr := 8;
-							when 8 => cntr := 3;
-							when 3 => cntr := 7;
-							when 7 => cntr := 6;
-							when 6 => cntr := 12;
-							when others => cntr := 10;
-						end case;
-						case cntr is
-							when 1 => Q <= "0001";
-							when 2 => Q <= "0010";
-							when 3 => Q <= "0011";
-							when 4 => Q <= "0100";
-							when 5 => Q <= "0101";
-							when 6 => Q <= "0110";
-							when 7 => Q <= "0111";
-							when 8 => Q <= "1000";
-							when 9 => Q <= "1001";
-							when 10 => Q <= "1010";
-							when 11 => Q <= "1011";
-							when 12 => Q <= "1100";
-							when 13 => Q <= "1101";
-							when others => Q <= "0001";
-						end case;
-					when "10" =>
-						if(cntr = 13) then 
-							cntr := 1;
-						else
-							cntr := cntr + 1;
-						end if;
-						case cntr is
-							when 1 => Q <= "0001";
-							when 2 => Q <= "0010";
-							when 3 => Q <= "0011";
-							when 4 => Q <= "0100";
-							when 5 => Q <= "0101";
-							when 6 => Q <= "0110";
-							when 7 => Q <= "0111";
-							when 8 => Q <= "1000";
-							when 9 => Q <= "1001";
-							when 10 => Q <= "1010";
-							when 11 => Q <= "1011";
-							when 12 => Q <= "1100";
-							when 13 => Q <= "1101";
-							when others => Q <= "0001";
-						end case;
-					when "11" =>
-						Q <= "1111";
-				end case;
-			end if;
-		end if;
-	end process;
-end architecture arc1;
+  process (Clk, Reset)
+  begin
+    if Reset = '1' then
+counter_value <= 0;
+      case Mode is
+            when "00" =>
+              counter_value <= 11;
+            when "01" =>
+              counter_value <= 10;
+            when "10" =>
+              counter_value <= 1;
+            when others =>
+              counter_value <= 15;
+          end case;
+    elsif rising_edge(Clk) then
+      if Enable = '1' then
+        if Mode /= prev_mode then
+          case Mode is
+            when "00" =>
+              counter_value <= 11;
+            when "01" =>
+              counter_value <= 10;
+            when "10" =>
+              counter_value <= 1;
+            when others =>
+              counter_value <= 15;
+          end case;
+          prev_mode <= Mode;
+        else
+          case Mode is
+            when "00" =>
+              if counter_value > 1 then
+                counter_value <= counter_value - 2;
+              else
+                counter_value <= 11;
+              end if;
+            when "01" =>
+              case counter_value is
+                when 10 =>
+                  counter_value <= 5;
+                when 5 =>
+                  counter_value <= 8;
+                when 8 =>
+                  counter_value <= 3;
+                when 3 =>
+                  counter_value <= 7;
+                when 7 =>
+                  counter_value <= 6;
+                when 6 =>
+                  counter_value <= 12;
+                when others =>
+                  counter_value <= 10;
+              end case;
+            when "10" =>
+              if counter_value < 13 then
+                counter_value <= counter_value + 1;
+              else
+                counter_value <= 1;
+              end if;
+            when others =>
+              null; -- Mode "11", Q is always "1111"
+          end case;
+        end if;
+      end if;
+    end if;
+  end process;
+Q <= conv_std_logic_vector(counter_value, 4);
+end architecture behaviour;
