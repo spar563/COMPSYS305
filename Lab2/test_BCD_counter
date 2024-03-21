@@ -1,0 +1,57 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity test_BCD_counter is
+end test_BCD_counter;
+
+architecture Behaviour of test_BCD_counter is
+    signal clk, dir, reset, en : std_logic := '0';
+    signal Q : integer;
+
+	component BCD_counter is
+    		Port (
+        		clk : in STD_LOGIC;
+        		dir : in STD_LOGIC;
+        		reset : in STD_LOGIC;
+        		en : in STD_LOGIC;
+        		Q : out integer
+    		);
+	end component;
+begin
+    dut: entity work.BCD_counter
+        port map (
+            clk => clk,
+            dir => dir,
+            reset => reset,
+            en => en,
+            Q => Q
+        );
+
+    Clk_process: process
+    begin
+        clk <= '0';
+        wait for 5 ns;
+        clk <= '1';
+        wait for 5 ns;
+    end process;
+
+    Stimulus: process
+    begin
+        dir <= '1'; -- down counter
+        en <= '1';
+	reset <= '1';
+	wait for 10 ns;
+	reset <= '0';
+        wait for 1200 ns;
+	dir <= '1'; -- down counter
+	reset <= '1';
+	wait for 10 ns;
+	reset <= '0';
+        wait for 600 ns;
+	en <= '0';
+	wait for 200 ns;
+	reset <= '1';
+	wait for 1000 ns;
+	wait;
+    end process;
+end Behaviour;
