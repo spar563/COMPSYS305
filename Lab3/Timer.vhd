@@ -31,7 +31,7 @@ architecture arc of Timer is
 
 	signal Counter_Digit : std_logic_vector (3 downto 0);
 	signal Timer_Enable, Counter_Enable : std_logic := '0';
-	signal Timer_Direction : std_logic;
+	signal Timer_Direction : std_logic := '0';
 	signal Timeout : boolean := false;
 begin
 
@@ -39,18 +39,21 @@ begin
 
 	Counter : BCD_counter
 	port map (
-		Clk => Clk
-        	Direction => Timer_Direction
-        	Init => Data_In
-        	Enable => Counter_Enable
+		Clk => Clk,
+        	Direction => Timer_Direction,
+        	Init => Data_In(9),
+        	Enable => Counter_Enable,
         	Q_Out => Counter_Digit
 	);
 
+
+
 	SevenSeg : BCD_to_SevenSeg
 	port map ( 
-		BCD_digit => Counter_Digit
+		BCD_digit => Counter_Digit,
         	SevenSeg_out => SevenSeg_out
 	);
+
 
 
 end architecture arc;
