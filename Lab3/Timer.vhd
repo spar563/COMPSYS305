@@ -35,5 +35,22 @@ architecture arc of Timer is
 	signal Timeout : boolean := false;
 begin
 
+	
+
+	Counter : BCD_counter
+	port map (
+		Clk => Clk
+        	Direction => Timer_Direction
+        	Init => Data_In
+        	Enable => Counter_Enable
+        	Q_Out => Counter_Digit
+	);
+
+	SevenSeg : BCD_to_SevenSeg
+	port map ( 
+		BCD_digit => Counter_Digit
+        	SevenSeg_out => SevenSeg_out
+	);
+
 
 end architecture arc;
