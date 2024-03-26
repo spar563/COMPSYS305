@@ -27,15 +27,25 @@ architecture arc of Timer is
            	SevenSeg_out : out std_logic_vector(6 downto 0)
 		);
 	end component;
+
+	component Clk_1Hz is
+		port ( 
+		Clk_in : in std_logic;
+		Clk_out : out std_logic;
+		);
 	
 
 	signal Counter_Digit : std_logic_vector (3 downto 0);
 	signal Timer_Enable, Counter_Enable : std_logic := '0';
-	signal Timer_Direction : std_logic := '0';
+	signal Timer_Direction : std_logic := '1';
 	signal Timeout : boolean := false;
 begin
 
-	
+	Clk_1Hz : Clk_1Hz
+	port map ( 
+		Clk_in => Clk
+		Clk_out => -- signal for the new clock
+	);
 
 	Counter : BCD_counter
 	port map (
@@ -55,5 +65,9 @@ begin
 	);
 
 
+process(Clk, Direction, Reset, Enable)
+	begin
+
+end process;
 
 end architecture arc;
