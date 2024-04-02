@@ -1,10 +1,11 @@
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_UNSIGNED.ALL;
-use IEEE.STD_LOGIC_ARITH.ALL;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+use ieee.numeric_std.all;
 
 entity BCD_counter is
 	Port (
+	Data_in : in std_logic_vector(3 downto 0);
         Clk : in STD_LOGIC;
         Direction : in STD_LOGIC;
         Init : in STD_LOGIC;
@@ -26,7 +27,7 @@ begin
 					cntr <= 0;
 				else 
 					-- initialise to 9
-					cntr <= 9;
+					cntr <= to_integer(unsigned(Data_in));
 				end if;
 			else 
 				if Direction = '0' then 
@@ -43,13 +44,13 @@ begin
 						cntr <= cntr - 1;
 					else 
 						-- set counter to 0 once it reaches 9
-						cntr <= 9;
+						cntr <= to_integer(unsigned(Data_in));
 					end if;
 				end if;
 			end if;
 		end if;
 	end if;
 	end process;
-    Q_Out <= conv_std_logic_vector(cntr, Q_Out'length);
+    Q_Out <= std_logic_vector(to_unsigned(cntr, Q_Out'length));
 end Behaviour;
 	
