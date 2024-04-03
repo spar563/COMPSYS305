@@ -5,6 +5,7 @@ use IEEE.STD_LOGIC_ARITH.ALL;
 
 entity three_digit_counter is
 Port (
+	Data_in : in std_logic_vector(9 downto 0);
         Clk : in STD_LOGIC;
         Reset : in STD_LOGIC;
         Enable : in STD_LOGIC;
@@ -17,7 +18,8 @@ architecture Behaviour of three_digit_counter is
 
 component BCD_counter
 Port (
-	Data_in : in std_logic_vector;
+	Data_in : in std_logic_vector(3 downto 0);
+	Reset_value : in std_logic_vector(3 downto 0);
         Clk : in STD_LOGIC;
         Direction : in STD_LOGIC;
         Init : in STD_LOGIC;
@@ -29,11 +31,13 @@ end component;
 signal ones_place, tens_place, mins_place : std_logic_vector(3 downto 0);
 signal tens_enable, mins_enable : std_logic;
 signal ones_in, tens_in, mins_in : std_logic_vector(3 downto 0);
+signal ones_reset, tens_reset, mins_reset : std_logic_vector(3 downto 0);
 
 begin
 
 BCD_Ones : BCD_counter port map (
 			Data_in => ones_in,
+			Reset_value => ones_reset,
 			Clk => Clk,
 			Direction => '1',
 			Init => Reset,
@@ -42,6 +46,7 @@ BCD_Ones : BCD_counter port map (
 
 BCD_Tens : BCD_counter port map (
 			Data_in => tens_in,
+			Reset_value => tens_reset,
 			Clk => Clk,
 			Direction => '1',
 			Init => Reset,
@@ -50,19 +55,25 @@ BCD_Tens : BCD_counter port map (
 
 BCD_Mins : BCD_counter port map (
 			Data_in => mins_in,
+			Reset_value => mins_reset,
 			Clk => Clk,
 			Direction => '1',
 			Init => Reset,
     			Enable => mins_enable,
 			Q_Out => mins_place );
 
-ones_in <= "1001";
-tens_in <= "0101";
-mins_in <= "0011";
+ones_in <= Data_in(3 downto 0);
+tens_in <= Data_in(7 downto 4);
+mins_in <= "00" & Data_in(9 downto 8);
+
+
+ones_reset <= "1001";
+tens_reset <= "0101";
+mins_reset <= "0011";
 
 
 tens_enable <= '1' when (ones_place = "0000") and (Enable = '1') else '0';
-mins_enable <= '1' when (tens_place = "0000") and (tens_enable = '1') else '0';
+mins_enable <= '1' when (tens_place = "0000") and (tens_enable = '1') and (Enable = '1') else '0';
 
 
 Q_sec <= tens_place & ones_place;

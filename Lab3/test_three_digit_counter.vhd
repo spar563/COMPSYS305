@@ -5,18 +5,27 @@ entity test_three_digit_counter is
 end entity test_three_digit_counter;
 
 architecture sim of test_three_digit_counter is
+  signal Data_in : std_logic_vector (9 downto 0);
   signal Clk, Reset, Enable : std_logic := '0';
   signal t_Q : std_logic_vector(7 downto 0);
   signal t_Q_min : std_logic_vector (3 downto 0);
 begin
   dut: entity work.three_digit_counter
     port map (
+      Data_in => Data_in,
       Clk => Clk,
       Reset => Reset,
       Enable => Enable,
       Q_sec => t_Q,
       Q_min => t_Q_min
     );
+
+  -- Data_in process
+  Data_in_process : process
+  begin
+    Data_in <= "1100110011";
+    wait;
+  end process;
   
   -- Clock process
   Clk_process: process

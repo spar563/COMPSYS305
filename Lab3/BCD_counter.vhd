@@ -6,6 +6,7 @@ use ieee.numeric_std.all;
 entity BCD_counter is
 	Port (
 	Data_in : in std_logic_vector(3 downto 0);
+	Reset_value : in std_logic_vector(3 downto 0);
         Clk : in STD_LOGIC;
         Direction : in STD_LOGIC;
         Init : in STD_LOGIC;
@@ -44,7 +45,7 @@ begin
 						cntr <= cntr - 1;
 					else 
 						-- set counter to 0 once it reaches 9
-						cntr <= to_integer(unsigned(Data_in));
+						cntr <= to_integer(unsigned(Reset_value));
 					end if;
 				end if;
 			end if;

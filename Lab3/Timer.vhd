@@ -1,73 +1,66 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use ieee.numeric_std.all;
 
-entity timer is
+entity Timer is
 	port(
 	Data_In :  in std_logic_vector (9 downto 0);
 	Clk, start : in std_logic;
 	Time_Out : out std_logic;
-	SevenSeg_Out : out std_logic_vector (6 downto 0)
+	SevenSeg_Out_ones : out std_logic_vector (6 downto 0);
+	SevenSeg_Out_tens : out std_logic_vector (6 downto 0);
+	SevenSeg_Out_mins : out std_logic_vector (6 downto 0)
 	);
 end entity;
 
 architecture arc of Timer is
-	component BCD_counter
-		Port (
-       		Clk : in STD_LOGIC;
-        	Direction : in STD_LOGIC;
-        	Init : in STD_LOGIC;
-        	Enable : in STD_LOGIC;
-        	Q_Out : out STD_LOGIC_VECTOR (3 downto 0)
-		);
-	end component;
 
-	component BCD_to_SevenSeg is
-     		port (
-		BCD_digit : in std_logic_vector(3 downto 0);
-           	SevenSeg_out : out std_logic_vector(6 downto 0)
-		);
-	end component;
+component three_digit_counter
+Port (
+	Data_in : in std_logic_vector(9 downto 0);
+        Clk : in STD_LOGIC;
+        Reset : in STD_LOGIC;
+        Enable : in STD_LOGIC;
+        Q_sec : out STD_LOGIC_VECTOR (7 downto 0);
+	Q_min : out std_logic_vector (3 downto 0)
+);
+end component;
 
-	component Clk_1Hz is
-		port ( 
-		Clk_in : in std_logic;
-		Clk_out : out std_logic;
-		);
-	
+component BCD_to_SevenSeg
+port (
+	BCD_digit : in std_logic_vector(3 downto 0);
+        SevenSeg_out : out std_logic_vector(6 downto 0)
+);
+end component;
 
-	signal Counter_Digit : std_logic_vector (3 downto 0);
-	signal Timer_Enable, Counter_Enable : std_logic := '0';
-	signal Timer_Direction : std_logic := '1';
-	signal Timeout : boolean := false;
+
+signal timer_enable : std_logic;
+signal seconds : std_logic_vector(7 downto 0);
+signal minutes : std_logic_vector (3 downto 0);
+signal value_in : std_logic_vector (3 downto 0);
+signal value_out : std_logic_vector(6 downto 0);
+
+
 begin
 
-	Clk_1Hz : Clk_1Hz
-	port map ( 
-		Clk_in => Clk
-		Clk_out => -- signal for the new clock
-	);
+timer : three_digit_counter port map(
+	Data_in => Data_in,
+	Clk => Clk,
+	Reset => start,
+	Enable => timer_enable,
+	Q_sec => seconds,
+	Q_min => minutes
+);
 
-	Counter : BCD_counter
-	port map (
-		Clk => Clk,
-        	Direction => Timer_Direction,
-        	Init => Data_In(9),
-        	Enable => Counter_Enable,
-        	Q_Out => Counter_Digit
-	);
-
+SevenSeg : BCD_to_SevenSeg port map(
+	BCD_digit => value_in,
+	SevenSeg_out => value_out
+);
 
 
-	SevenSeg : BCD_to_SevenSeg
-	port map ( 
-		BCD_digit => Counter_Digit,
-        	SevenSeg_out => SevenSeg_out
-	);
+timer_enable <= '0' when (seconds = "00000000") and (minutes = "0000") and (start = '0') else '1';
+
+Time_Out <= '1' when (timer_enable = '0') else '0';
 
 
-process(Clk, Direction, Reset, Enable)
-	begin
-
-end process;
-
-end architecture arc;
+end arc;
