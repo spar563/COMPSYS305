@@ -75,6 +75,7 @@ mins_reset <= "0011";
 
 tens_enable <= '1' when (ones_place = "0000") and (Enable = '1') else '0';
 mins_enable <= '1' when (tens_place = "0000") and (tens_enable = '1') and (Enable = '1') else '0';
+Enable <= '0' when (ones_place = "0000") and (tens_place = "0000") and (mins_place = "0000");
 
 
 Q_sec_ones <= ones_place;

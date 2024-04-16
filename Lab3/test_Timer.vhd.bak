@@ -37,7 +37,7 @@ begin
   Data_in_process : process
   begin
     Data_in <= "0100110111";
-    wait;  -- Adding wait for some time to prevent infinite loop
+    wait  -- Adding wait for some time to prevent infinite loop
    
   end process;
   

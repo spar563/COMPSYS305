@@ -1,0 +1,290 @@
+m255
+K4
+z2
+!s11e vcom 2020.2 2020.04, Apr 19 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3
+T_opt
+!s110 1713229507
+VNUi[aXm3NFf0JICkcWF8J1
+04 24 3 work test_three_digit_counter sim 1
+=1-cc96e530f29c-661dcec2-30b-5448
+Z1 o-quiet -auto_acc_if_foreign -work work +acc
+Z2 tCvgOpt 0
+n@_opt
+Z3 OE;O;2020.2;71
+R0
+T_opt1
+!s110 1713232751
+V^SS5U_6865IR8gEn95TZE3
+04 10 3 work test_timer sim 1
+=1-cc96e530f29c-661ddb6f-243-3dc4
+R1
+R2
+n@_opt1
+R3
+Ebcd_counter
+Z4 w1712107016
+Z5 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z6 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z7 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+Z8 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z9 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 2
+R0
+Z10 8C:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/BCD_counter.vhd
+Z11 FC:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/BCD_counter.vhd
+l0
+L6 1
+VTV>bFMT8VaM;CRHAjT]^>1
+!s100 1M1>?NM]h2LcCF^0Q>eko0
+Z12 OE;C;2020.2;71
+32
+Z13 !s110 1713229493
+!i10b 1
+Z14 !s108 1713229493.000000
+Z15 !s90 -reportprogress|300|-work|work|C:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/BCD_counter.vhd|
+Z16 !s107 C:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/BCD_counter.vhd|
+!i113 0
+Z17 o-work work
+Z18 tExplicit 1 CvgOpt 0
+Abehaviour
+R5
+R6
+R7
+R8
+R9
+DEx4 work 11 bcd_counter 0 22 TV>bFMT8VaM;CRHAjT]^>1
+!i122 2
+l20
+L18 39
+VoX5LQVcP3D8a4DQ4;mVF?3
+!s100 >l_VAa6I_UazR^i:llIIV1
+R12
+32
+R13
+!i10b 1
+R14
+R15
+R16
+!i113 0
+R17
+R18
+Ebcd_to_sevenseg
+Z19 w1712098508
+R8
+R9
+!i122 3
+R0
+Z20 8C:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/BCD_to_SevenSeg.vhd
+Z21 FC:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/BCD_to_SevenSeg.vhd
+l0
+L7 1
+V7bY1:N`AGbLAiX4>:8?ol3
+!s100 Y<RKO6oRmA6hZ4E3[T>]O3
+R12
+32
+R13
+!i10b 1
+R14
+Z22 !s90 -reportprogress|300|-work|work|C:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/BCD_to_SevenSeg.vhd|
+Z23 !s107 C:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/BCD_to_SevenSeg.vhd|
+!i113 0
+R17
+R18
+Aarc1
+R8
+R9
+DEx4 work 15 bcd_to_sevenseg 0 22 7bY1:N`AGbLAiX4>:8?ol3
+!i122 3
+l13
+L12 14
+VWJYWmcYm>kST;a2]FAdoQ2
+!s100 6jDSSS]WIMc891OKY13_o1
+R12
+32
+R13
+!i10b 1
+R14
+R22
+R23
+!i113 0
+R17
+R18
+Etest_three_digit_counter
+Z24 w1713229481
+R8
+R9
+!i122 4
+R0
+Z25 8C:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/test_three_digit_counter.vhd
+Z26 FC:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/test_three_digit_counter.vhd
+l0
+L4 1
+V3<zHCOi8lgS>Ez0jmKK^_0
+!s100 S[f1[^P0CzE9DPHC?UWSY3
+R12
+32
+Z27 !s110 1713229496
+!i10b 1
+Z28 !s108 1713229496.000000
+Z29 !s90 -reportprogress|300|-work|work|C:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/test_three_digit_counter.vhd|
+Z30 !s107 C:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/test_three_digit_counter.vhd|
+!i113 0
+R17
+R18
+Asim
+R8
+R9
+DEx4 work 24 test_three_digit_counter 0 22 3<zHCOi8lgS>Ez0jmKK^_0
+!i122 4
+l26
+L7 68
+V`9aJ;>b3cE;OQAPM_JK`J3
+!s100 TYBkT3lRdY^la9]]Rgf003
+R12
+32
+R27
+!i10b 1
+R28
+R29
+R30
+!i113 0
+R17
+R18
+Etest_timer
+Z31 w1713232738
+R8
+R9
+!i122 25
+R0
+Z32 8C:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/test_Timer.vhd
+Z33 FC:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/test_Timer.vhd
+l0
+L4 1
+VRZ`Xl]3HDIVLSl1edfPOB0
+!s100 DMjo5KQzQo8<CXjOoEoza1
+R12
+32
+Z34 !s110 1713232742
+!i10b 1
+Z35 !s108 1713232742.000000
+Z36 !s90 -reportprogress|300|-work|work|C:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/test_Timer.vhd|
+Z37 !s107 C:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/test_Timer.vhd|
+!i113 0
+R17
+R18
+Asim
+R5
+Z38 DEx4 work 5 timer 0 22 j16cY2Y_V0PHG`<j3ji7D3
+R8
+R9
+DEx4 work 10 test_timer 0 22 RZ`Xl]3HDIVLSl1edfPOB0
+!i122 25
+l24
+L7 60
+Vz5Ad4jQ]mV3l?aeEf7klc3
+!s100 6IVB2RELQ=8]E3[zB35h31
+R12
+32
+R34
+!i10b 1
+R35
+R36
+R37
+!i113 0
+R17
+R18
+Ethree_digit_counter
+Z39 w1713229779
+R6
+R7
+R8
+R9
+!i122 6
+R0
+Z40 8C:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/three_digit_counter.vhd
+Z41 FC:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/three_digit_counter.vhd
+l0
+L6 1
+VDLA30>6Lz>F;hAaMm=fZ@1
+!s100 E]:=Mg4I23WB<mHVPR:oE3
+R12
+32
+!s110 1713229785
+!i10b 1
+!s108 1713229785.000000
+Z42 !s90 -reportprogress|300|-work|work|C:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/three_digit_counter.vhd|
+Z43 !s107 C:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/three_digit_counter.vhd|
+!i113 0
+R17
+R18
+Abehaviour
+R6
+R7
+R8
+R9
+DEx4 work 19 three_digit_counter 0 22 DLA30>6Lz>F;hAaMm=fZ@1
+!i122 5
+l37
+L18 66
+Va[;K@@n53aiH<GC3@YNc?2
+!s100 zClYV>eRUWZjUQ7TCfzHV2
+R12
+32
+R27
+!i10b 1
+R28
+R42
+R43
+!i113 0
+R17
+R18
+Etimer
+Z44 w1713231902
+R5
+R8
+R9
+!i122 22
+R0
+Z45 8C:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/Timer.vhd
+Z46 FC:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/Timer.vhd
+l0
+L5 1
+Vj16cY2Y_V0PHG`<j3ji7D3
+!s100 1ZJ92lYBT9=]DMf98_1N62
+R12
+32
+Z47 !s110 1713232090
+!i10b 1
+Z48 !s108 1713232090.000000
+Z49 !s90 -reportprogress|300|-work|work|C:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/Timer.vhd|
+Z50 !s107 C:/Users/spar563/OneDrive - The University of Auckland/Documents/COMPSYS305/Lab3/Timer.vhd|
+!i113 0
+R17
+R18
+Aarc
+R5
+R8
+R9
+R38
+!i122 22
+l42
+L16 61
+V@hdJXJg@nmi;[cO2<X4KV2
+!s100 MhFeMdML1aF7^L?32neda0
+R12
+32
+R47
+!i10b 1
+R48
+R49
+R50
+!i113 0
+R17
+R18

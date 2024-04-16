@@ -69,7 +69,9 @@ SevenSeg_Mins : BCD_to_SevenSeg port map(
 
 timer_enable <= '0' when (ones_place = "0000") and (tens_place = "0000") and (mins_place = "0000") and (start = '0') else '1';
 
-Time_Out <= '1' when (ones_place = "0000") and (tens_place = "0000") and (mins_place = "0000") and (start = '0') else '0';
+Time_Out <= '1'; 
+
+--when (ones_place = "0000") and (tens_place = "0000") and (mins_place = "0000") and (start = '0') else '0';
 
 
 

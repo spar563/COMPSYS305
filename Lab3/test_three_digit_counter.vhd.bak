@@ -11,7 +11,7 @@ architecture sim of test_three_digit_counter is
   signal t_Q_tens : std_logic_vector(3 downto 0);
   signal t_Q_min : std_logic_vector (3 downto 0);
 
- component three_digit_counter is 
+ component three_digit_timer is 
 	Port (
 	Data_in : in std_logic_vector(9 downto 0);
         Clk : in STD_LOGIC;
@@ -24,7 +24,7 @@ architecture sim of test_three_digit_counter is
 end component;
 
 begin
-  dut : three_digit_counter port map (
+  dut : three_digit_timer port map (
       Data_in => Data_in,
       Clk => Clk,
       Reset => Reset,
