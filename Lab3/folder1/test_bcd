@@ -1,0 +1,91 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+-- Testbench entity (no ports needed)
+entity tb_bcd_counter is
+end tb_bcd_counter;
+
+architecture test of tb_bcd_counter is
+
+    -- Constants and signals for test
+    constant CLK_PERIOD : time := 10 ns;
+
+    signal Clk       : std_logic := '0';
+    signal Reset     : std_logic := '0';  -- synchronous
+    signal Enable    : std_logic := '0';
+    signal Direction : std_logic := '1';  -- '1' = count up, '0' = count down
+    signal Q_out     : std_logic_vector(3 downto 0);
+
+begin
+
+    -- DUT (Device Under Test) instantiation
+    DUT : entity work.bcd_counter
+        port map (
+            Clk       => Clk,
+            Reset     => Reset,
+            Enable    => Enable,
+            Direction => Direction,
+            Q_out     => Q_out
+        );
+
+    -- Clock generation process
+    Clk_process : process
+    begin
+        while true loop
+            Clk <= '0';
+            wait for CLK_PERIOD / 2;
+            Clk <= '1';
+            wait for CLK_PERIOD / 2;
+        end loop;
+    end process Clk_process;
+
+    -- Stimulus process
+    stim_proc : process
+    begin
+        -------------------------------------------------
+        -- 1) Apply synchronous reset
+        -------------------------------------------------
+        Reset <= '1';
+        wait for 2 * CLK_PERIOD;
+        Reset <= '0';
+        wait for 2 * CLK_PERIOD;
+
+        -------------------------------------------------
+        -- 2) Enable UP counting
+        -------------------------------------------------
+        Enable <= '1';
+        Direction <= '1';  -- up
+        wait for 12 * CLK_PERIOD;  -- let it count from 0 to 9, see wrap to 0
+
+        -------------------------------------------------
+        -- 3) Switch to DOWN counting
+        -------------------------------------------------
+        Direction <= '0';  -- down
+        wait for 12 * CLK_PERIOD;  -- count down from current digit
+
+        -------------------------------------------------
+        -- 4) Disable the counter (Enable='0')
+        -------------------------------------------------
+        Enable <= '0';
+        wait for 6 * CLK_PERIOD;
+
+        -------------------------------------------------
+        -- 5) Re-enable while still in DOWN mode
+        -------------------------------------------------
+        Enable <= '1';
+        wait for 8 * CLK_PERIOD;
+
+        -------------------------------------------------
+        -- 6) Apply another reset
+        -------------------------------------------------
+        Reset <= '1';
+        wait for 2 * CLK_PERIOD;
+        Reset <= '0';
+        wait for 8 * CLK_PERIOD;
+
+        -- End simulation
+        wait;
+    end process stim_proc;
+
+end architecture test;
