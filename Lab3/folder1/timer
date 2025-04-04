@@ -1,0 +1,86 @@
+library IEEE;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity Timer is
+    Port (
+        Clk : in STD_LOGIC;
+        Reset : in STD_LOGIC;
+        Enable : in STD_LOGIC;
+        SevenSeg_ones : out STD_LOGIC_VECTOR(6 downto 0);
+        SevenSeg_tens : out STD_LOGIC_VECTOR(6 downto 0);
+        SevenSeg_min : out STD_LOGIC_VECTOR(6 downto 0)
+    );
+end Timer;
+
+architecture Behaviour of Timer is
+    signal ones, tens, mins : std_logic_vector(3 downto 0);
+    signal ones_enable, tens_enable, mins_enable : std_logic;
+    signal ones_reset, tens_reset, mins_reset : std_logic_vector(3 downto 0);
+    
+    -- BCD counter components for each digit
+    component BCD_counter is
+        Port (
+         Clk       : in  std_logic;
+         Reset     : in  std_logic;  -- synchronous reset
+         Enable    : in  std_logic;  -- enable counting
+         Direction : in  std_logic;  -- '1' = up, '0' = down
+         Q_out     : out std_logic_vector(3 downto 0)
+        );
+    end component;
+    
+    -- BCD to 7-segment display conversion component
+    component BCD_to_SevenSeg is
+        Port (
+            BCD_digit : in std_logic_vector(3 downto 0);
+            SevenSeg_out : out std_logic_vector(6 downto 0)
+        );
+    end component;
+
+begin
+    -- BCD counters for ones, tens, and minutes
+    BCD_Ones : BCD_counter port map (
+        Clk => Clk,
+        Direction => '1',  -- count up
+	Reset => Reset,
+        Enable => Enable,
+        Q_Out => ones
+    );
+
+    BCD_Tens : BCD_counter port map (
+        Clk => Clk,
+        Direction => '1',  -- count up
+	Reset => Reset,
+        Enable => ones_enable,
+        Q_Out => tens
+    );
+
+    BCD_Mins : BCD_counter port map (
+        Clk => Clk,
+        Direction => '1',  -- count up
+        Reset => Reset,
+        Enable => tens_enable,
+        Q_Out => mins
+    );
+
+    -- Logic for enabling the next digit
+    ones_enable <= '1' when (ones = "1001") else '0';
+    tens_enable <= '1' when (tens = "1001" and ones = "1001") else '0';
+    
+    -- Convert BCD digits to 7-segment display
+    BCD_to_SevenSeg_ones : BCD_to_SevenSeg port map (
+        BCD_digit => ones,
+        SevenSeg_out => SevenSeg_ones
+    );
+    
+    BCD_to_SevenSeg_tens : BCD_to_SevenSeg port map (
+        BCD_digit => tens,
+        SevenSeg_out => SevenSeg_tens
+    );
+    
+    BCD_to_SevenSeg_mins : BCD_to_SevenSeg port map (
+        BCD_digit => mins,
+        SevenSeg_out => SevenSeg_min
+    );
+    
+end Behaviour;
