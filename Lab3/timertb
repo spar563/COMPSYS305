@@ -1,0 +1,60 @@
+library IEEE;
+use ieee.std_logic_1164.all;
+
+entity Timer_tb is
+end Timer_tb;
+
+architecture Behaviour of Timer_tb is
+    signal Clk : std_logic := '0';
+    signal Reset : std_logic := '0';
+    signal Enable : std_logic := '1';
+    signal SevenSeg_ones, SevenSeg_tens, SevenSeg_min : std_logic_vector(6 downto 0);
+    
+    -- Instantiate the Timer component
+    component Timer is
+        Port (
+            Clk : in STD_LOGIC;
+            Reset : in STD_LOGIC;
+            Enable : in STD_LOGIC;
+            SevenSeg_ones : out STD_LOGIC_VECTOR(6 downto 0);
+            SevenSeg_tens : out STD_LOGIC_VECTOR(6 downto 0);
+            SevenSeg_min : out STD_LOGIC_VECTOR(6 downto 0)
+        );
+    end component;
+
+begin
+    -- Instantiate the Timer
+    uut: Timer port map (
+        Clk => Clk,
+        Reset => Reset,
+        Enable => Enable,
+        SevenSeg_ones => SevenSeg_ones,
+        SevenSeg_tens => SevenSeg_tens,
+        SevenSeg_min => SevenSeg_min
+    );
+    
+    -- Clock generation process (1 Hz clock)
+    Clk_process : process
+    begin
+        Clk <= '0';
+        wait for 500 ms;
+        Clk <= '1';
+        wait for 500 ms;
+    end process;
+
+    -- Test process
+    Test_process : process
+    begin
+        -- Reset the timer at the beginning
+        Reset <= '1';
+        wait for 10 ms;
+        Reset <= '0';
+        
+        -- Enable the timer and let it run for a while
+        wait for 2000 ms;
+        
+        -- Stop the simulation
+        wait;
+    end process;
+
+end Behaviour;
