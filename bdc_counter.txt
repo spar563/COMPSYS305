@@ -1,0 +1,48 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+entity bcd_counter is
+    port (
+        Clk       : in  std_logic;
+        Reset     : in  std_logic;  -- synchronous reset
+        Enable    : in  std_logic;  -- enable counting
+        Direction : in  std_logic;  -- '1' = up, '0' = down
+        Q_out     : out std_logic_vector(3 downto 0)
+    );
+end entity;
+
+architecture behaviour of bcd_counter is
+    signal counter : unsigned(3 downto 0) := (others => '0');
+begin
+
+    Q_out <= std_logic_vector(counter);
+
+    process(Clk)
+    begin
+        if rising_edge(Clk) then
+            if Reset = '1' then
+                if Direction = '1' then
+                    counter <= "0000";  -- reset to 0
+                else
+                    counter <= "1001";  -- reset to 9
+                end if;
+            elsif Enable = '1' then
+                if Direction = '1' then
+                    if counter = "1001" then
+                        counter <= "0000";  -- wrap from 9 to 0
+                    else
+                        counter <= counter + 1;
+                    end if;
+                else
+                    if counter = "0000" then
+                        counter <= "1001";  -- wrap from 0 to 9
+                    else
+                        counter <= counter - 1;
+                    end if;
+                end if;
+            end if;
+        end if;
+    end process;
+
+end architecture;
